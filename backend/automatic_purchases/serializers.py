@@ -1,7 +1,7 @@
 # Верстальщик
 from rest_framework import serializers
 
-from models import Contact, UserContact, Category, Shop, Product, ProductParameter, ProductInfo, OrderItem, Order
+from automatic_purchases.models import Contact, UserContact, Category, Shop, Product, ProductParameter, ProductInfo, OrderItem, Order
 
 
 class ContactSerializer(serializers.ModelSerializer):

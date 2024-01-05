@@ -20,7 +20,7 @@ from automatic_purchases.models import Shop, Category, Product, ProductInfo, Par
     OrderItem, Contact, ConfirmEmailToken
 from automatic_purchases.serializers import UserContactSerializer, CategorySerializer, ShopSerializer, \
     ProductInfoSerializer, OrderItemSerializer, OrderSerializer, ContactSerializer
-from backend.signals import new_user_registered, new_order
+# from backend.signals import new_user_registered, new_order
 
 
 class RegisterAccount(APIView):
