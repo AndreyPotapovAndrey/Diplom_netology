@@ -1,7 +1,7 @@
 # Верстальщик
 from rest_framework import serializers
 
-from automatic_purchases.models import Contact, UserContact, Category, Shop, Product, ProductParameter, ProductInfo, OrderItem, Order
+from automatic_purchases.models import Contact, User, Category, Shop, Product, ProductParameter, ProductInfo, OrderItem, Order
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -14,11 +14,11 @@ class ContactSerializer(serializers.ModelSerializer):
         }
 
 
-class UserContactSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     contacts = ContactSerializer(read_only=True, many=True)
 
     class Meta:
-        model = UserContact
+        model = User
         fields = ('id', 'first_name', 'last_name', 'email', 'company', 'position', 'contacts')
         read_only_fields = ('id',)
 

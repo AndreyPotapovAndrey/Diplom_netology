@@ -1,4 +1,3 @@
-from django.utils.translation import gettext_lazy as _
 from distutils.util import strtobool
 from rest_framework.request import Request
 from django.contrib.auth import authenticate
@@ -16,11 +15,11 @@ from rest_framework.views import APIView
 from ujson import loads as load_json
 from yaml import load as load_yaml, Loader
 
-from automatic_purchases.models import Shop, Category, Product, ProductInfo, Parameter, ProductParameter, Order, \
-    OrderItem, Contact, ConfirmEmailToken
-from automatic_purchases.serializers import UserContactSerializer, CategorySerializer, ShopSerializer, \
-    ProductInfoSerializer, OrderItemSerializer, OrderSerializer, ContactSerializer
-# from backend.signals import new_user_registered, new_order
+from automatic_purchases.models import Shop, Category, Product, ProductInfo, Parameter, ProductParameter, Order, OrderItem, \
+    Contact, ConfirmEmailToken
+from automatic_purchases.serializers import UserSerializer, CategorySerializer, ShopSerializer, ProductInfoSerializer, \
+    OrderItemSerializer, OrderSerializer, ContactSerializer
+from automatic_purchases.signals import new_user_registered, new_order
 
 
 class RegisterAccount(APIView):
@@ -56,7 +55,7 @@ class RegisterAccount(APIView):
             else:
                 # проверяем данные для уникальности имени пользователя
 
-                user_serializer = UserContactSerializer(data=request.data)
+                user_serializer = UserSerializer(data=request.data)
                 if user_serializer.is_valid():
                     # сохраняем пользователя
                     user = user_serializer.save()
@@ -127,7 +126,7 @@ class AccountDetails(APIView):
         if not request.user.is_authenticated:
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
-        serializer = UserContactSerializer(request.user)
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
     # Редактирование методом POST
@@ -160,7 +159,7 @@ class AccountDetails(APIView):
                 request.user.set_password(request.data['password'])
 
         # проверяем остальные данные
-        user_serializer = UserContactSerializer(request.user, data=request.data, partial=True)
+        user_serializer = UserSerializer(request.user, data=request.data, partial=True)
         if user_serializer.is_valid():
             user_serializer.save()
             return JsonResponse({'Status': True})
@@ -788,4 +787,4 @@ class OrderView(APIView):
 #     input_serializer.is_valid(raise_exception=True)
 #     input_serializer.save()
 #     return Response(input_serializer.data, status=status.HTTP_201_CREATED)  # По симантике принято в ответе получать 201
-    
+

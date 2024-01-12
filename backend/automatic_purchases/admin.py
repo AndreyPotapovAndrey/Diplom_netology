@@ -1,16 +1,16 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from automatic_purchases.models import Product, UserContact, Shop, Category, ProductInfo, Parameter, ProductParameter, \
+from automatic_purchases.models import Product, User, Shop, Category, ProductInfo, Parameter, ProductParameter, \
     Order, OrderItem, Contact, ConfirmEmailToken
 
 
-@admin.register(UserContact)
+@admin.register(User)
 class CustomUserAdmin(UserAdmin):
     """
     Панель управления пользователями
     """
-    model = UserContact
+    model = User
 
     fieldsets = (
         (None, {'fields': ('email', 'password', 'type')}),

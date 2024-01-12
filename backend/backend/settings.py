@@ -14,6 +14,8 @@ import environ
 import os
 from pathlib import Path
 
+# AUTH_USER_MODEL = 'automatic_purchases.User'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -131,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "UTC"
 
@@ -173,5 +175,19 @@ REST_FRAMEWORK = {
         'anon': '10/minute',
     }
 }
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# smtp settings
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+SERVER_EMAIL = env('EMAIL_HOST_USER')
+
+AUTH_USER_MODEL = 'automatic_purchases.User'
+
 
 
