@@ -1,0 +1,184 @@
+# Регистрация пользователя
+
+POST http://localhost:8000/user/register
+Content-Type: application/json
+
+{
+    "first_name": "Andrey",
+    "last_name": "Potapov",
+    "email": "andrannikal@yandex.ru",
+    "password": "qwer1234A",
+    "company": "adidas",
+    "position": 345345
+}
+
+###
+
+# Подтверждение эл. почты пользователя
+
+POST http://localhost:8000/user/register/confirm
+Content-Type: application/json
+
+{
+  "email": "andrannikal@yandex.ru",
+  "token": "1b0a81c3e29a9fd9686c"
+}
+
+###
+
+# Авторизация пользователя
+
+POST http://localhost:8000/user/login
+Content-Type: application/json
+
+{
+  "email": "andrannikal@yandex.ru",
+  "password": "qwer1234A"
+}
+
+###
+
+# Просмотреть информацию о пользователе
+# Возвращается информация, соответствующая вставленному токену
+
+GET http://localhost:8000/user/details
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+
+###
+
+#  Обновить прайс партнёра (Репозитарий Нетологии)
+
+POST http://localhost:8000/partner/update
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+url=https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml
+
+
+
+###
+
+#  Обновить прайс партнёра (Мой удалённый репозитарий)
+
+POST http://localhost:8000/partner/update
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token d1885df031f6112f9a56dd0447a3914f06e6a1dd
+
+url=https://raw.githubusercontent.com/AndreyPotapovAndrey/Diplom_netology/master/data/shop1.yaml
+
+
+###
+
+# Регистрация пользователя с типом "shop"
+
+POST http://localhost:8000/user/register
+Content-Type: application/json
+
+{
+    "first_name": "Andy",
+    "last_name": "Potapovsky",
+    "email": "andy@yandex.ru",
+    "password": "qwer1234A",
+    "company": "PotapovskyDiamond",
+    "position": 345346,
+    "type": "shop"
+}
+
+###
+
+# Авторизация пользователя (shop)
+
+POST http://localhost:8000/user/login
+Content-Type: application/json
+
+{
+  "email": "andy@yandex.ru",
+  "password": "qwer1234A"
+}
+
+###
+
+# Создать контакт (Контакт создаётся для юзера, токен которого указан)
+
+POST http://localhost:8000/user/contact
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+{   "city": "Moscow",
+    "street": "Prophsouzniy street 40",
+    "house": "Apartament 28",
+    "structure": "2",
+    "building": "1",
+    "apartment": "123",
+    "phone": "749564563242"
+}
+
+###
+
+# Просмотреть контакт
+
+GET http://localhost:8000/user/contact
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+###
+
+# Редактировать контакт
+
+# Пример запроса через "Terminal":
+
+# curl --location --request PUT 'http://example.com:8000/user/contact'
+#--header 'Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807'
+#--form 'city="St. Petersburg"'
+#--form 'street="Nevsky Prospect"'
+#--form 'house="Apartament 1"'
+#--form 'structure="1"'
+#--form 'building="1"'
+#--form 'apartment="345"'
+#--form 'id="2"'
+#--form 'phone="+78125465421"'
+
+PUT http://localhost:8000/user/contact
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+{   "city": "St. Petersburg",
+    "street": "Nevsky Prospect",
+    "house": "Apartament 1",
+    "structure": "1",
+    "building": "1",
+    "apartment": "123",
+    "phone": "78125550055",
+    "id": "3"
+}
+
+###
+
+# Удалить контакт(-ы)
+
+DELETE http://localhost:8000/user/contact
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+{
+    "items": "2,4"
+}
+
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -176,8 +176,8 @@ REST_FRAMEWORK = {
     }
 }
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Ответ на запрос приходит на e-mail
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Ответ на запрос приходит в консоль
 
 # smtp settings
 EMAIL_HOST = env('EMAIL_HOST')

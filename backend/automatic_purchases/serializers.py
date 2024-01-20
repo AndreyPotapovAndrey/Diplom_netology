@@ -16,10 +16,10 @@ class ContactSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     contacts = ContactSerializer(read_only=True, many=True)
-
+    type = serializers.CharField(required=False)  # type - необязательный аргумент
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'company', 'position', 'contacts')
+        fields = ('id', 'first_name', 'last_name', 'email', 'company', 'position', 'contacts', 'type')
         read_only_fields = ('id',)
 
 

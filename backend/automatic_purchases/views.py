@@ -43,7 +43,7 @@ class RegisterAccount(APIView):
         if {'first_name', 'last_name', 'email', 'password', 'company', 'position'}.issubset(request.data):
 
             # проверяем пароль на сложность
-            sad = 'asd'
+            # sad = 'asd'
             try:
                 validate_password(request.data['password'])
             except Exception as password_error:
@@ -601,9 +601,11 @@ class ContactView(APIView):
             return JsonResponse({'Status': False, 'Error': 'Log in required'}, status=403)
 
         if {'city', 'street', 'phone'}.issubset(request.data):
-            request.data._mutable = True
-            request.data.update({'user': request.user.id})
-            serializer = ContactSerializer(data=request.data)
+            # request.data._mutable = True
+            import copy
+            data = copy.deepcopy(request.data)
+            data.update({'user': request.user.id})
+            serializer = ContactSerializer(data=data)
 
             if serializer.is_valid():
                 serializer.save()

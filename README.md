@@ -7,3 +7,5 @@
 * **pip install -r requirements.txt** - `Установить зависимости`
 * **python manage.py makemigrations** - `Создаём файл миграций`
 * **python manage.py migrate** - `Запускаем миграции`
+* **python manage.py runserver** - `Запускаем сервер`
+
