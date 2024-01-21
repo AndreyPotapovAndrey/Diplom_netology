@@ -1,5 +1,8 @@
+# Создание базы дынных в терминале проекта:
+**psql createdb -U username namedb** - `Переходим в клиент для создания базы данных от имени пользователя
+'username' с названием 'namedb'`
 # Cкрипт создания DRF-проекта:
-## *1) В терминале, находясь в папке backend последовательно ввести команды:*
+## *В терминале, находясь в папке backend последовательно ввести команды:*
 * **django-admin startproject backend** - `Создание проекта под названием 'backend'`
 * **python manage.py startapp automatic_purchases** - `Создание пиложения 'automatic_purchases'`
 * **python -m venv venv** - `Создание 'виртуального окружения проекта'`

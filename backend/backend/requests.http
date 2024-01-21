@@ -167,6 +167,27 @@ Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
 
 ###
 
+# Показать список магазинов (list shops)
+
+GET http://localhost:8000/shops
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+###
+
+# Искать товары
+
+GET http://localhost:8000/products?shop_id=5&category_id=224
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+###
+
+#
+
+
+}
+
+
+
 
 
 
