@@ -34,7 +34,7 @@ Content-Type: application/json
 
 {
   "email": "andrey777@yandex.ru",
-  "password": "qwer1234A"
+  "password": "qwer123"
 }
 
 ###
@@ -108,7 +108,8 @@ Authorization: Token 4a64351ce0ec061a03d0128bc4bbab6340acab7a
 
 ###
 
-# Проверка действительности токена
+# Запрос (и проверка) токена для изменения пароля. Если токен есть,
+# но ему больше 24-х часов, то он удаляется и заменяется новым.
 
 POST http://localhost:8000/user/password_reset
 Content-Type: application/json
@@ -120,15 +121,20 @@ Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
 
 ###
 
+# Запрос изменения пароля пользователя (Токен для изменения пароля приходит в таблицу
+# "django_rest_passwordreset_resetpasswordtoken")
+# после отправки запроса "POST http://localhost:8000/user/password_reset"
+
 POST http://localhost.com:8000/user/password_reset/confirm
 Content-Type: application/json
 Authorization: Token ac280ce41a4c1b128ce6cea4e76b025ebe807652
 
 {
-  "email": "andy@yandex.ru",
-  "password": "qwer1234A",
-  "token": "f4e3c6848e95a593ee8eb48e71ad39a6a4c9276a3960b"
+  "email": "andrey777@yandex.ru",
+  "password": "qwer123",
+  "token": "07a540ed99bd05df59dcc8d6ba6b14feb86cc52a22aa7a8"
 }
+
 ###
 
 # Создать контакт (Контакт создаётся для юзера, токен которого указан)
@@ -251,6 +257,8 @@ items=1,2
 
 ###
 
+# Поссмотрееть  содержимое корзины
+
 GET http://localhost:8000/order
 Content-Type: application/x-www-form-urlencoded
 Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
@@ -264,9 +272,6 @@ Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
 {
     "id": "1",
     ""
-}
-{
-"id": "1",
 }
 
 ###
