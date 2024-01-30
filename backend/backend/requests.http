@@ -1,4 +1,6 @@
 # Регистрация пользователя
+# Если явно не указываем тип пользователя, то он создаётся по-умолчанию с типом "buyer"
+# То есть "покупатель"
 
 POST http://localhost:8000/user/register
 Content-Type: application/json
@@ -6,21 +8,20 @@ Content-Type: application/json
 {
     "first_name": "Andrey",
     "last_name": "Potapov",
-    "email": "andrannikal@yandex.ru",
+    "email": "andrey777@yandex.ru",
     "password": "qwer1234A",
-    "company": "adidas",
     "position": 345345
 }
 
 ###
 
-# Подтверждение эл. почты пользователя
+# Подтверждение эл.почты пользователя ("token" берём из таблицы "automatic_purchases_confirmemailtoken" из колонки "key")
 
 POST http://localhost:8000/user/register/confirm
 Content-Type: application/json
 
 {
-  "email": "andrannikal@yandex.ru",
+  "email": "andrey777@yandex.ru",
   "token": "1b0a81c3e29a9fd9686c"
 }
 
@@ -32,42 +33,9 @@ POST http://localhost:8000/user/login
 Content-Type: application/json
 
 {
-  "email": "andrannikal@yandex.ru",
+  "email": "andrey777@yandex.ru",
   "password": "qwer1234A"
 }
-
-###
-
-# Просмотреть информацию о пользователе
-# Возвращается информация, соответствующая вставленному токену
-
-GET http://localhost:8000/user/details
-Content-Type: application/json
-Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
-
-
-###
-
-#  Обновить прайс партнёра (Репозитарий Нетологии)
-
-POST http://localhost:8000/partner/update
-Content-Type: application/x-www-form-urlencoded
-Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
-
-url=https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml
-
-
-
-###
-
-#  Обновить прайс партнёра (Мой удалённый репозитарий)
-
-POST http://localhost:8000/partner/update
-Content-Type: application/x-www-form-urlencoded
-Authorization: Token d1885df031f6112f9a56dd0447a3914f06e6a1dd
-
-url=https://raw.githubusercontent.com/AndreyPotapovAndrey/Diplom_netology/master/data/shop1.yaml
-
 
 ###
 
@@ -100,6 +68,69 @@ Content-Type: application/json
 
 ###
 
+# Регистрация 3-го пользователя (Покупателя)
+
+POST http://localhost:8000/user/register
+Content-Type: application/json
+
+{
+    "first_name": "Andy_2",
+    "last_name": "Potapovich",
+    "email": "andy_2@yandex.ru",
+    "password": "qwer1234A",
+    "position": 345347
+}
+
+###
+
+# Просмотреть информацию о пользователе
+# Возвращается информация, соответствующая вставленному токену
+
+GET http://localhost:8000/user/details
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+###
+
+# Изменение информации о юзере методом POST (3-й пользователь с почтой "andy_2@yandex.ru")
+
+POST http://localhost:8000/user/details
+Content-Type: application/json
+Authorization: Token 4a64351ce0ec061a03d0128bc4bbab6340acab7a
+
+{
+    "first_name": "AndrOID",
+    "last_name": "PotaP",
+    "email": "a@a.ru",
+    "password": "qwer777QWERy=ty",
+    "position": 777
+}
+
+###
+
+# Проверка действительности токена
+
+POST http://localhost:8000/user/password_reset
+Content-Type: application/json
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+{
+  "email":  "andrey777@yandex.ru"
+}
+
+###
+
+POST http://localhost.com:8000/user/password_reset/confirm
+Content-Type: application/json
+Authorization: Token ac280ce41a4c1b128ce6cea4e76b025ebe807652
+
+{
+  "email": "andy@yandex.ru",
+  "password": "qwer1234A",
+  "token": "f4e3c6848e95a593ee8eb48e71ad39a6a4c9276a3960b"
+}
+###
+
 # Создать контакт (Контакт создаётся для юзера, токен которого указан)
 
 POST http://localhost:8000/user/contact
@@ -124,7 +155,7 @@ Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
 
 ###
 
-# Редактировать контакт
+# Редактировать контакт методом PUT
 
 # Пример запроса через "Terminal":
 
@@ -181,10 +212,97 @@ Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
 
 ###
 
-#
+# Добавляем товар(-ы) в корзину
+
+POST http://localhost:8000/basket
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
+
+items=[{"product_info": 9, "quantity": 1}, {"product_info": 10, "quantity": 1}]
+
+###
+
+# Посмотреть, что в корзине
+
+GET http://localhost:8000/basket
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
 
 
+###
+
+# Редактировать количество товаров в корзине (Увеличиваем добавленные ранее товары на 9 штук)
+
+PUT http://localhost:8000/basket
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
+
+items=[{"id": 1, "quantity": 10} ,{"id": 2, "quantity": 10}]
+
+###
+
+# Удаляем 1-ю и 2-ю позицию в корзине
+
+DELETE http://localhost:8000/basket
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
+
+items=1,2
+
+###
+
+GET http://localhost:8000/order
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
+
+###
+
+POST http://localhost:8000/order
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token 77c27b89211c88e811ed613371a63cd7ecbb9d49
+
+{
+    "id": "1",
+    ""
 }
+{
+"id": "1",
+}
+
+###
+
+#  Обновить прайс партнёра (Репозитарий Нетологии)
+
+POST http://localhost:8000/partner/update
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token b488210fa8ef1b9dc71fbbc3893807bc6126a807
+
+url=https://raw.githubusercontent.com/netology-code/pd-diplom/master/data/shop1.yaml
+
+###
+
+#  Обновить прайс партнёра (Мой удалённый репозитарий)
+
+POST http://localhost:8000/partner/update
+Content-Type: application/x-www-form-urlencoded
+Authorization: Token d1885df031f6112f9a56dd0447a3914f06e6a1dd
+
+url=https://raw.githubusercontent.com/AndreyPotapovAndrey/Diplom_netology/master/data/shop1.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
