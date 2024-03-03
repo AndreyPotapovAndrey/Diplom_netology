@@ -100,6 +100,22 @@ class User(AbstractUser):
         ordering = ('email',)
 
 
+# class User(AbstractUser):
+#     """
+#     User model.
+#     """
+#     username = None
+#     email = models.EmailField(_('email address'), unique=True)
+#
+#     USERNAME_FIELD = 'email'
+#     REQUIRED_FIELDS = []
+#
+#     objects = UserManager()
+#
+#     def __str__(self):
+#         return self.email
+
+
 class Shop(models.Model):
     objects = models.manager.Manager()
     name = models.CharField(max_length=50, verbose_name='Название')

@@ -189,5 +189,8 @@ SERVER_EMAIL = env('EMAIL_HOST_USER')
 
 AUTH_USER_MODEL = 'automatic_purchases.User'
 
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
 
 
