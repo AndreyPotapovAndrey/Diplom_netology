@@ -1,0 +1,79 @@
+version: '3.11'
+
+services:
+  db:
+    image: postgres:13  # Используем официальный образ PostgreSQL версии 13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Подключаем том для сохранения данных базы данных между запусками контейнеров
+    environment:
+      POSTGRES_DB: ${DB_NAME}  # Имя базы данных
+      POSTGRES_USER: ${DB_USER}  # Имя пользователя базы данных
+      POSTGRES_PASSWORD: ${DB_PASSWORD}  # Пароль пользователя базы данных
+    networks:
+      - backend  # Подключаем к внутренней сети backend
+
+  redis:
+    image: redis:6  # Используем официальный образ Redis версии 6
+    networks:
+      - backend  # Подключаем к внутренней сети backend
+
+  web:
+    build: .  # Сборка образа из корня проекта, где находится Dockerfile
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000  # Запуск Gunicorn для Django приложения
+    volumes:
+      - .:/app # Монтирование кода приложения в контейнер
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings  # Указываем модуль настроек Django
+      - SECRET_KEY=${SECRET_KEY}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db  # Зависимость от сервиса db
+      - redis  # Зависимость от сервиса redis
+    networks:
+      - backend  # Подключаем к внутренней сети backend
+
+  celery:
+    build: .  # Сборка образа из корня проекта, где находится Dockerfile
+    volumes:
+      - .:/app # Монтирование кода приложения в контейнер
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings  # Указываем модуль настроек Django
+      - SECRET_KEY=${SECRET_KEY}
+    depends_on:
+      - db  # Зависимость от сервиса db
+      - redis  # Зависимость от сервиса redis
+    networks:
+      - backend  # Подключаем к внутренней сети backend
+
+  nginx:
+    image: nginx:1.19  # Используем официальный образ Nginx
+    ports:
+      - "80:80"  # Проброс порта 80 с хоста на контейнер
+    volumes:
+      - ./nginx:/etc/nginx/conf.d  # Монтирование конфигурации Nginx
+      - static_volume:/app/static  # Монтирование тома со статическими файлами для Nginx
+    depends_on:
+      - web  # Зависимость от сервиса web
+    networks:
+      - backend  # Подключаем к внутренней сети backend
+
+networks:
+  backend:  # Определение внутренней сети для связи между контейнерами
+
+volumes:
+  postgres_data:  # Определение тома для данных PostgreSQL
+  static_volume:  # Определение тома для статических файлов
+
+
+#version: '3.1'
+#
+#services:
+#
+#  redis:
+#    image: redis
+#    ports:
+#      - "6382:6379"
