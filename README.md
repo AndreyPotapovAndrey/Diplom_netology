@@ -1,38 +1,38 @@
 # Создание базы дынных в терминале проекта:
-**psql createdb -U username namedb** - `Переходим в клиент для создания базы данных от имени пользователя
-'username' с названием 'namedb'`
+`psql createdb -U username namedb` - Переходим в клиент для создания базы данных от имени пользователя
+'username' с названием 'namedb'
 
 # Cкрипт создания DRF-проекта:
-* **django-admin startproject backend** - `Создание проекта под названием 'backend'`
-* **python manage.py startapp automatic_purchases** - `Создание пиложения 'automatic_purchases'`
-* **python -m venv venv** - `Создание 'виртуального окружения проекта'`
-* **venv\Scripts\activate.bat** - `Активация 'виртуального окружения проекта' (Windows)`
-* **source venv/bin/activate** - `Активация 'виртуального окружения проекта' (Linux, MacOS)`
-* **pip install -r requirements.txt** - `Установить зависимости`
-* **python manage.py makemigrations** - `Создаём файл миграций`
-* **python manage.py migrate** - `Запускаем миграции`
-* **python manage.py runserver** - `Запускаем сервер`
+* *`django-admin startproject backend`* - Создание проекта под названием 'backend'
+* *`python manage.py startapp automatic_purchases`* - Создание пиложения 'automatic_purchases'
+* *`python -m venv venv`* - Создание 'виртуального окружения проекта'
+* *`venv\Scripts\activate.bat`* - Активация 'виртуального окружения проекта' (Windows)
+* *`source venv/bin/activate`* - Активация 'виртуального окружения проекта' (Linux, MacOS)
+* *`pip install -r requirements.txt`* - Установить зависимости
+* *`python manage.py makemigrations`* - Создаём файл миграций
+* *`python manage.py migrate`* - Запускаем миграции
+* *`python manage.py runserver`* - Запускаем сервер
 
 # Команда запуска контейнера с redis (нужен для работы celery):
 ### *В терминале, находясь в папке `backend` ввести команду:*
-`*docker-compose up*`
+`docker-compose up`
 
 # Команда запуска celery:
 ### *В терминале, находясь в папке `backend`, ввести команду:*
-`*celery -A backend  worker --loglevel=info*` - флаг `--loglevel=info` нужен для настройки уровня логирования 
+`celery -A backend  worker --loglevel=info` - флаг `--loglevel=info` нужен для настройки уровня логирования 
 при запуске рабочего процесса Celery. Этот флаг устанавливает уровень логирования на "info", что позволяет получать 
 оперативные сообщения о работе, включая информацию о выполнении задач, старте и завершении работы рабочих процессов, 
 а также другие важные операционные сообщения.
 
 ## Для того, чтобы ответ на запрос приходил не в консоль, а на указанную при регистрации пользователя электронную почту нужно:
 ### *В в файле settings.py изменить настройки следующим образом:*
-* **EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'** - `Раскомментировать и закомментировать 'django.core.mail.backends.console.EmailBackend'`
-* **EMAIL_HOST = 'smtp.yandex.ru'** - `SMTP (Simple Mail Transfer Protocol) — это стандартный протокол для отправки электронных писем в Интернете.`
-* **EMAIL_PORT = 465** - `Стандартный порт Яндекс-почты` 
-* **EMAIL_HOST_USER = 'your_email@yandex.ru'** - `Замените 'your_email@yandex.ru' на ваш реальный адрес электронной почты на Яндексе  `
-* **EMAIL_HOST_PASSWORD = 'your_password'** - `Замените 'your_password' на ваш реальный пароль электронной почты на Яндексе`
-* **EMAIL_PORT = 587** - `Стандартный порт Яндекс_почты`
-* **EMAIL_USE_TLS = True** - `Обратите внимание, что в данном случае используется SSL (EMAIL_USE_SSL = True), а не TLS, что является стандартными настройками для Яндекс.Почты.`
+* *`EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'`* - Раскомментировать и закомментировать 'django.core.mail.backends.console.EmailBackend'
+* *`EMAIL_HOST = 'smtp.yandex.ru'`* - SMTP (Simple Mail Transfer Protocol) — это стандартный протокол для отправки электронных писем в Интернете.
+* *`EMAIL_PORT = 465`* - Стандартный порт Яндекс-почты 
+* *`EMAIL_HOST_USER = 'your_email@yandex.ru'`* - Замените 'your_email@yandex.ru' на ваш реальный адрес электронной почты на Яндексе
+* *`EMAIL_HOST_PASSWORD = 'your_password'`* - Замените 'your_password' на ваш реальный пароль электронной почты на Яндексе
+* *`EMAIL_PORT = 587`* - Стандартный порт Яндекс_почты
+* *`EMAIL_USE_TLS = True`* - Обратите внимание, что в данном случае используется SSL (EMAIL_USE_SSL = True), а не TLS, что является стандартными настройками для Яндекс.Почты.
 
 ### Важно!
 *Для того, чтобы ответы на запросы приходили на указанную при регистрации эл. почту, вместо пароля непосредственно от почтового ящика,*
