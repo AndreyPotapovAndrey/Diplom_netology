@@ -176,8 +176,8 @@ REST_FRAMEWORK = {
     }
 }
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Ответ на запрос приходит на e-mail
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Ответ на запрос приходит в консоль
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Ответ на запрос приходит на e-mail
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Ответ на запрос приходит в консоль
 
 # smtp settings
 EMAIL_HOST = env('EMAIL_HOST')
@@ -191,6 +191,10 @@ AUTH_USER_MODEL = 'automatic_purchases.User'
 
 # Celery Configuration
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 
 
