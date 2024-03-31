@@ -40,7 +40,7 @@ class RegisterAccount(APIView):
                 JsonResponse: The response indicating the status of the operation and any errors.
             """
         # проверяем обязательные аргументы
-        if {'first_name', 'last_name', 'email', 'password', 'company', 'position'}.issubset(request.data):
+        if {'first_name', 'last_name', 'email', 'password'}.issubset(request.data):
 
             # проверяем пароль на сложность
             # sad = 'asd'
@@ -738,55 +738,4 @@ class OrderView(APIView):
                         return JsonResponse({'Status': True})
 
         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from rest_framework import status
-# from rest_framework.decorators import api_view
-# from rest_framework.response import Response
-#
-# from backend.users.serializers import SignUpSerializers
-#
-#
-# @api_view(http_method_names=['POST'])
-# def register(request):
-#     input_serializer = SignUpSerializers(data=request.data)
-#     input_serializer.is_valid(raise_exception=True)
-#     input_serializer.save()
-#     return Response(input_serializer.data, status=status.HTTP_201_CREATED)  # По симантике принято в ответе получать 201
 
